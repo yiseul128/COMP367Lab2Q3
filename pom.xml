@@ -72,7 +72,7 @@
 				<version>3.2.1</version>
 				<configuration>
 					<failsOnError>false</failsOnError>
-					<outputFile>reports/checkstyle/checkstyle.xml</outputFile>
+					<outputFile>reports/checkstyle/checkstyle-result.xml</outputFile>
 				</configuration>
 			</plugin>
 		</plugins>
