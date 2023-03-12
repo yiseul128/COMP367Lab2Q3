@@ -11,6 +11,7 @@ public class WelcomeController {
 	@GetMapping("/")
 	public String displayWelcome(Model model) {
 		String msg = "Good morning";
+		String unusedVar1;
 		
 		LocalDateTime currentTime = LocalDateTime.now();
         System.out.println("Current system date/time is : "
@@ -20,10 +21,10 @@ public class WelcomeController {
         int h =Integer.parseInt(currentTime.toString().substring(11, 13));
         System.out.println("h: " + h);
         if(h>=12) {
-        	msg = "Good afternoon";
-        }
+        	msg = "Good afternoon";;
+}
         
 		model.addAttribute("msg", msg);
 		return "index";
-	}
+}
 }
