@@ -45,7 +45,41 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.20.0</version>
+				<configuration>
+					<linkXRef>true</linkXRef>
+					<minimumTokens>100</minimumTokens>
+					<targetJdk>1.8</targetJdk>
+					<format>xml</format>
+					<outputDirectory>reports/pmd/</outputDirectory>
+					<targetDirectory>reports/pmd/</targetDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>pmd</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<failsOnError>false</failsOnError>
+					<outputFile>reports/checkstyle/checkstyle.xml</outputFile>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<!-- <reporting>
+		<plugins>
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>findbugs-maven-plugin</artifactId>
@@ -53,18 +87,9 @@
 		        <configuration>
 		          <effort>Max</effort>
 		          <threshold>Low</threshold>
-		          <xmlOutput>true</xmlOutput>
 		        </configuration>
-		        <executions>
-		          <execution>
-					  <phase>verify</phase>
-		            <goals>
-		              <goal>findbugs</goal>
-		            </goals>
-		          </execution>
-		        </executions>
 		   </plugin>
 		</plugins>
-	</build>
+	</reporting>-->
 
 </project>
