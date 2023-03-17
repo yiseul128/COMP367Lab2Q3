@@ -35,7 +35,7 @@ pipeline {
         stage('Docker push') {
             steps {
                 script {
-                    bat 'docker push dew0135/mavenproject4docker:%BUILD_ID%'
+                    bat 'docker push dew0135/comp367lab2q3:%BUILD_ID%'
                 }
             }            
         }
