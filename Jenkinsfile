@@ -1,10 +1,22 @@
 pipeline {
     agent any
-
     tools {
         maven "maven"
     }
-
+    
+    environment {
+        AZURE_ACI_NAME = "comp367-group-project3" // replace with your Azure container instance name
+        DOCKERHUB_USERNAME = 'dew0135'
+        DOCKERHUB_REGISTRY = 'docker.io'
+        DOCKERHUB_REPOSITORY = 'comp367lab2q3'
+        IMAGE_TAG = 'latest'
+        CONTAINER_NAME = 'comp367-group-project3'
+        RESOURCE_GROUP = 'newresourcegroup'
+        REGION = 'eastus'
+        CPU = 1
+        MEMORY = 1.5
+    }
+    
     stages {
         stage('Check out') {
             steps {
@@ -38,6 +50,19 @@ pipeline {
                     bat 'docker push dew0135/comp367lab2q3:%BUILD_ID%'
                 }
             }            
+        }
+        
+        stage('Deploy to Azure Container Instances') {
+            steps {
+                script {
+                	withCredentials([string(credentialsId: 'f980e30e-f1e7-4c20-8e56-98dfaf18b915', variable: 'azure_pat')]) {
+	                    def acrPAT = credentials('azure_pat')
+	                    bat "az login --service-principal -u ${acrPAT} -p '' --tenant ${env.TENANT_ID}"
+	                    bat "az acr login --name ${DOCKERHUB_REGISTRY} --expose-token"
+	                    bat "az container create --resource-group ${AZURE_RG} --name ${CONTAINER_NAME} --image ${DOCKERHUB_REGISTRY}/${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY}:${IMAGE_TAG} --cpu ${CPU} --memory ${MEMORY} --ports 8083 --location ${REGION}"
+                	}
+                }
+            }
         }
     }
 }
