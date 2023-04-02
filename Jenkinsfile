@@ -56,8 +56,8 @@ pipeline {
             steps {
                 script {
                 	withCredentials([string(credentialsId: 'f980e30e-f1e7-4c20-8e56-98dfaf18b915', variable: 'azure_pat')]) {
-	                    bat 'az login --service-principal -u $%azure_pat% -p '' --tenant %TENANT_ID%'
-	                    bat 'az acr login --name %DOCKERHUB_REGISTRY% --expose-token'
+	                    bat 'az login --service-principal -u -p %azure_pat% --tenant %TENANT_ID%'
+	                    // bat 'az acr login --name %DOCKERHUB_REGISTRY% --expose-token'
 	                    bat 'az container create --resource-group %RESOURCE_GROUP% --name %CONTAINER_NAME% --image %DOCKERHUB_REGISTRY%/%DOCKERHUB_USERNAME%/%DOCKERHUB_REPOSITORY%:%IMAGE_TAG% --cpu %CPU% --memory %MEMORY% --ports 8083 --location %REGION%'
                 	}
                 }
