@@ -57,7 +57,8 @@ pipeline {
                 script {
                 	//withCredentials([string(credentialsId: 'f980e30e-f1e7-4c20-8e56-98dfaf18b915', variable: 'azure_pat')]) {
                 	withCredentials([usernamePassword(credentialsId: '07198527-09b8-4896-aa7c-8b986b17bffb', passwordVariable: 'pwd', usernameVariable: 'user')]) {
-	                    bat 'az login -u %user% -p %pwd%'
+	                    bat 'echo %pwd% | az login --username %user% --password -'
+	                    // bat 'az login -u %user% -p %pwd%'
 	                    // bat 'az acr login --name %DOCKERHUB_REGISTRY% --expose-token'
 	                    bat 'az container create --resource-group %RESOURCE_GROUP% --name %CONTAINER_NAME% --image %DOCKERHUB_REGISTRY%/%DOCKERHUB_USERNAME%/%DOCKERHUB_REPOSITORY%:%IMAGE_TAG% --cpu %CPU% --memory %MEMORY% --ports 8083 --location %REGION%'
                 	}
